@@ -36,11 +36,15 @@ export class SignupPage {
     // Attempt to login in through our User service
     this.user.signup(this.account).subscribe((resp) => {
       this.navCtrl.push(MainPage);
+      let toast = this.toastCtrl.create({
+        message: 'Well Done! Use Bright Sound!',
+        duration: 3000,
+        position: 'top'
+      });
+      toast.present();
     }, (err) => {
-
-      this.navCtrl.push(MainPage);
-
       // Unable to sign up
+      console.log(err);
       let toast = this.toastCtrl.create({
         message: this.signupErrorString,
         duration: 3000,
