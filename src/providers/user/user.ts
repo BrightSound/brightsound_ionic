@@ -53,7 +53,8 @@ export class User {
    * the user entered on the form.
    */
   signup(accountInfo: any) {
-    let seq = this.api.post('signup', accountInfo).share();
+    let reqOpts = { params: new HttpParams(), withCredentials: true };
+    let seq = this.api.post('/authentication/sign_up', accountInfo, reqOpts).share();
 
     seq.subscribe((res: any) => {
       // If the API returned a successful response, mark the user as logged in
