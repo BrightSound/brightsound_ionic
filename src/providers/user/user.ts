@@ -1,10 +1,7 @@
 import 'rxjs/add/operator/toPromise';
-
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 import { Api } from '../api/api';
-
-import { CookieService } from 'ngx-cookie-service';
 
 /**
  * Most apps have the concept of a User. This is a simple provider
@@ -29,21 +26,20 @@ import { CookieService } from 'ngx-cookie-service';
 export class User {
   _user: any;
 
-  constructor(public api: Api, private cookieService: CookieService) { }
+  constructor(public api: Api) { }
 
   /**
    * Send a POST request to our login endpoint with the data
    * the user entered on the form.
    */
   login(accountInfo: any) {
-    let seq = this.api.post('/authentication/login', accountInfo).share();
+    let reqOpts = { params: new HttpParams(), withCredentials: true };
+    let seq = this.api.post('/authentication/login', accountInfo, reqOpts).share();
 
     seq.subscribe((res: any) => {
       // If the API returned a successful response, mark the user as logged in
       if (res.status == 'success') {
         this._loggedIn(res);
-      } else if (res.access_token) {
-        this.cookieService.set('rack.session', res.access_token, 10, '/', 'localhost');
       }
     }, err => {
       console.error('ERROR', err);
@@ -57,7 +53,8 @@ export class User {
    * the user entered on the form.
    */
   signup(accountInfo: any) {
-    let seq = this.api.post('signup', accountInfo).share();
+    let reqOpts = { params: new HttpParams(), withCredentials: true };
+    let seq = this.api.post('/authentication/sign_up', accountInfo, reqOpts).share();
 
     seq.subscribe((res: any) => {
       // If the API returned a successful response, mark the user as logged in

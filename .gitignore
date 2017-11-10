@@ -32,3 +32,6 @@ $RECYCLE.BIN/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+
+# These were added while development
+.sourcemaps/
