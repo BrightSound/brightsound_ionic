@@ -15,6 +15,14 @@ export class SearchPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public items: Items) { }
 
+  ionViewCanEnter() {
+    true;
+  }
+
+  ionViewCanLeave() {
+    false;
+  }
+
   /**
    * Perform a service for the proper items.
    */
@@ -24,6 +32,7 @@ export class SearchPage {
       this.currentItems = [];
       return;
     }
+    console.log('query', val);
     this.currentItems = this.items.query({
       name: val
     });
